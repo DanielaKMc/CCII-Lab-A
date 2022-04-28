@@ -1,0 +1,200 @@
+//1. Hacer un programa que sin usar la función pow(), pero por medio de una función, calcule la potencia de un número (ambos números ingresados por teclado).
+
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+    
+int bs, expn, rst=0, x=1;
+    
+int main(){
+    cout<<"Ingrese el valor de la base: "<<endl;
+    cin>>bs;
+    cout<<"Ingrese el valor del exponente: "<<endl;
+    cin>>expn;
+    
+    while (x<expn){
+        if (rst<bs){
+            rst=bs*bs;
+        }
+        else{
+            rst=rst*bs;
+        }
+        
+        x++;
+    }
+    
+    cout<<"El resultado de su potencia es: "<<rst<<endl;
+    
+    return 0;
+}
+
+
+//2. Hacer un programa que lea por teclado un año, calcule y muestre si es bisiesto. Para realizar el cálculo utiliza una función llamada bisiesto. La función bisiesto recibe el año leído por teclado, comprueba si es o no bisiesto.
+
+#include <iostream>
+
+using namespace std;
+
+bool bisiesto(int n){
+    return((n%4==0 && n%100!=0 )|| n%400==0);
+}
+
+int main(){
+    int num;
+    
+    cout<<"Ingrese un año y el programa le indicará si es bisiesto o no."<<endl;
+    cout<<"Ingrese 0 para finalizar el programa.\n"<< endl;
+    
+    do{
+        cout<<"Ingrese el año: ";
+        cin>>num;
+        
+        if(bisiesto(num))
+            cout<<"El año "<<num<<" es bisiesto.\n\n";
+        
+        else
+            cout << "El año "<<num<<" no es bisiesto.\n\n";
+    }
+    
+    while(num!=0);
+
+    return 0;
+}
+
+
+//3. Hacer un programa que lee por teclado la fecha actual y la fecha de nacimiento de una persona y por medio de una función calcule su edad en años, meses y días.
+
+#include <iostream>
+
+using namespace std;
+ 
+void calculateAge(int currentYea , int currentMon, int currentDay, int birthYea, int birthMon, int birthDay);
+ 
+int main (){
+    int currentYea, currentMon, currentDay, birthYea, birthMon, birthDay;
+ 
+    cout<<"Ingrese solo valores numéricos."<<endl;
+ 
+    cout<<"Ingrese el año actual: ";cin>>currentYea;
+    cout<<"Ingrese el mes actual: ";cin>>currentMon;
+    cout<<"Ingrese el día del mes actual: ";cin>>currentDay;
+    
+    cout<<"Ingrese su año de nacimiento: ";cin>>birthYea;
+    cout<<"Ingrese su mes de nacimiento: ";cin>>birthMon;
+    cout<<"Ingrese el día de su mes de nacimiento: ";cin>>birthDay;
+ 
+    calculateAge(currentYea, currentMon, currentDay, birthYea, birthMon, birthDay);
+ 
+    return 0;
+}
+
+
+void calculateAge(int currentYea , int currentMon, int currentDay, int birthYea, int birthMon, int birthDay){
+    int rstDay, rstMon;
+ 
+    if(currentDay<birthDay){
+        currentDay=currentDay+30;
+        currentMon=currentMon-1;
+        rstDay=currentDay-birthDay;
+    }
+    
+    else
+        rstDay=currentDay-birthDay;
+ 
+    if(currentMon<birthMon){
+        currentMon=currentMon+12;
+        currentYea=currentYea-1;
+        rstMon=currentMon-birthMon;
+    }
+    
+    else
+        rstMon=currentMon-birthMon;
+ 
+    cout<<"Su edad es: "<<currentYea-birthYea<<endl;
+    cout<<"Meses: "<<rstMon<<endl;
+    cout<<"Días: "<<rstDay<<endl;
+}
+
+
+//4. Hacer un programa que desarrolle una función, que genere en pantalla el listado de números primos ubicados entre 1 hasta un numero x (x es ingresado por teclado).
+
+#include <iostream>
+
+using namespace std;
+
+bool primo(int n){
+    bool cond;
+    
+    if(n!=1 && n!=0){
+        for(int i=2; i<=n; i++){
+            if(n%i==0){
+                if(n==i){
+                    cond=true;
+                }
+                else{
+                    cond=false;
+                    return cond;
+                }
+            }
+        }
+    }
+    
+    else cond=false;
+    
+    return cond;
+}
+
+int main(){
+    int n;
+    
+    cout<<"Ingrese hasta qué número buscar números primos: "<<endl;
+    cin>>n;
+    
+    for(int i=1; i<=n; i++){
+        if(primo(i))
+            cout<<i<<endl;
+    }
+    
+    return 0;
+}
+
+
+//5. Desarrollar un programa, utilizando funciones con un tipo de retorno, con las siguientes opciones:
+//   a. Introducir un valor x entero comprendido entre 0 y 100.
+//   b. Validar que sea un valor par.
+//   c. Sumar todos los números impares desde el 0 hasta el valor de x.
+
+#include <iostream>
+
+using namespace std;
+
+bool vldt(int x){
+    if(x%2==0)
+        return true;
+    else{
+        return false;
+    }
+}
+
+int pls(int y){
+    int sum=0;
+    for(int i=1; i<=y; i+=2)
+        sum+=i;
+        return sum;
+}
+
+int main(){
+    int num;
+    do{
+        cout<<"Ingrese un número que se encuentre entre el 0 y 100: ";cin>>num;cout<<endl;
+    }
+    while(num<0 || num>100);
+    if(vldt(num)==true)
+        cout<<"El número "<<num<<" es par."<<endl;
+    else{
+        cout<<"El número "<<num<<" es impar."<<endl;
+    }
+    cout<<"La suma de los números impares de 0 a "<<num<<" es: "<<pls(num);
+    return 0;
+}
