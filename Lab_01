@@ -1,0 +1,130 @@
+//1. Escriba un código que solicite al usuario ingresar dos números enteros y que muestre el producto de ambos.
+
+int main()
+    {
+        int n1, n2;
+    
+        printf( "\n   Introduzca el primer número entero: " );
+        scanf( "%d", &n1 );
+    
+        printf( "\n   Introduzca el segundo número entero: " );
+        scanf( "%d", &n2 );
+    
+        printf( "\n   El producto es: %d", n1*n2 );
+    
+        return 0;
+    }
+
+
+//2. Escriba un código que solicite el primer nombre de una persona, el apellido paterno y el apellido materno. Retornar su correo UNSA generado, el cual consiste de la primera letra del nombre, el apellido paterno completo, y la primera letra del apellido materno. (se agrega el dominio de la universidad al final).
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    string name,fsurename,msurename;
+
+    cout<<"Debe escribir con minúsculas los datos que se le pida a continuación."<<endl;
+
+    cout<<"Primer nombre: "; cin>>name;
+    cout<<"Apellido paterno: "; cin>>fsurename;
+    cout<<"Apellido materno: "; cin>>msurename;
+
+    cout<<"Su correo UNSA generado es "<<name[0]<<fsurename<<msurename[0]<<"@unsa.edu.pe";
+
+    return 0;
+}
+
+
+//3. Elabore un programa que solicite ingresar una hora del día (HH:MM en formato de cadena), solicite un tiempo en minutos a agregar, y retorne la hora de finalización (el formato de salida debe de estar en AM o PM según corresponda).
+
+
+//4. Escriba un código que solicite una cantidad de minutos específica y muestre como resultado la hora y fecha resultante tomando como referencia la hora y fecha actual y restarle el tiempo indicado.
+
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+int main(){
+    time_t now=time(0);
+    tm*time=localtime(&now);
+    int hr=time->tm_hour, mins=time->tm_min, minspl;
+
+    cout<<"Indique la hora actual: "<<hr<<":"<<mins<<endl;
+    cout<<"Indique la cantidad (en minutos) que desee restar a la hora actual: ", cin>>minspl;
+
+    mins-=minspl;
+
+    if(mins<0){
+        if(mins<=-60)
+            hr-=mins%60;
+        else
+            hr--;
+        mins+=60;
+    }
+
+    cout<<"La hora resultante es: "<<hr<<":"<<mins<<endl;
+
+    return 0;
+}
+
+//5. Elabore un código que reciba como entrada una secuencia de caracteres que contiene un número flotante y retorne el número redondeado.
+
+
+//6. Elabore un código que solicite un número entre 100 < x < 999 y muestre el resultado en binario.
+
+
+//7. Elabore un algoritmo que lea por teclado dos números enteros y determine si uno es divisor del otro.
+
+
+//8. Escribir un programa que calcule la media de x cantidad de números introducidos por el teclado.
+
+
+//9. Escribir un programa que lea 10 datos desde el teclado y sume sólo aquellos que sean negativos.
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    int ns[10], sum;
+
+    cout<<"Ingrese 10 números y se sumarán solo los valores negativos: "<<endl;
+
+    for(int i=0; i<=9; i++){
+        cout<<"Introduzca el número "<<i+1<<": ";
+        cin>>ns[i];
+
+        if(ns[i]<0){
+            sum=sum+ns[i];
+        }
+    }
+
+    cout<<"El resultado de la suma de los números negativos es: "<<sum;
+
+    return 0;
+}
+
+
+//10. Escribir un programa que almacene la cadena de caracteres contraseña en una variable, pregunte al usuario por la contraseña hasta que introduzca la contraseña correcta.
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    char password[50];
+    string x="ohorat";
+
+    cout<<"Ingrese la contraseña:"<<endl;
+    cin>>password;
+
+    while(password!=x){
+        cout<<"Ingrese la contraseña correcta: "<<endl;
+        cin>>password;
+    }
+
+    return 0;
+}
