@@ -1,0 +1,133 @@
+//1. Escribir un programa donde se pueda ingresar los datos de tres personas, como el nombre, apellido, edad y DNI y luego lo muestre por pantalla.
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    string fname, sname, fsure, ssure;
+    int age, id;
+    
+    cout<<"****Datos****"<<endl;
+    
+    cout<<"Ingrese su primer nombre: ";
+    cin>>fname;
+    
+    cout<<"Ingrese su segundo nombre: ";
+    cin>>sname;
+    
+    cout<<"Ingrese su primer apellido: ";
+    cin>>fsure;
+    
+    cout<<"Ingrese su segundo apellido: ";
+    cin>>ssure;
+    
+    cout<<"Ingrese su edad: ";
+    cin>>age;
+    
+    cout<<"Ingrese su número de DNI: ";
+    cin>>id;
+    
+    cout<<"Su nombre completo es "<<fname<<" "<<sname<<" "<<fsure<<" "<<ssure<<endl;
+    cout<<"Usted tiene "<<age<<" años"<<endl;
+    cout<<"Su número de DNI es "<<id<<endl;
+    
+    return 0;
+}
+
+
+//2. Hacer un array unidimensional que acepte ocho números enteros. Luego le pregunte al usuario que ingrese un número a buscar, implementar una función que busque ese número, si lo encuentra, debe retornar un valor de verdaderos, en caso contrario, retorna falso.
+
+#include <iostream>
+
+using namespace std;
+
+const int L=8;;
+
+bool searchVal(int v[], int);
+
+int main(){
+    int vect[L], x, value;
+    
+    cout<<"Su lista será de 8 números."<<endl;
+ 
+    cout<<"Ingrese los números de su lista: ";
+    
+    for(int i=0; i<L; i++){
+        cin>>vect[i];
+    }
+    
+    cout<<"Ingrese el número que desea buscar en la lista: ";
+    cin>>x;
+    
+    value=searchVal(vect, x);
+    
+    if(value){
+        cout << "El número que busca está en la lista.";
+    }
+    else{
+        cout<<"No se encontró el número que busca.";
+    }
+    
+    return 0;
+}
+
+bool searchVal(int v[],int val){
+    for(int i=0; i<L; i++){
+        if(val==v[i]){
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+
+//3. Hacer un array 5x3 que acepte números enteros ingresados por el usuario. Al final, debe mostrar la suma de todos los números que estén en una fila par.
+
+#include <iostream>
+using namespace std;
+
+void loadMat();
+int sumPr(int mat[][3]);
+int mat[5][3], r, c; 
+
+int main(){
+    loadMat();
+    cout<<"La suma de las filas pares es: "<<sumPr(mat);
+    return 0;
+}
+
+void loadMat(){
+    cout<<"Ingrese 15 números para su array: ";
+    for(r=0; r<5; r++){
+        for(c=0; c<3; c++){
+            cin>>mat[r][c];
+        }
+    }
+}
+
+int sumPr(int mat[][3]){
+    int sum=0;
+    for(r=0; r<5; r+=3){
+        for(c=0; c<3 ; c++){
+            sum+=mat[r][c];
+        }
+    }
+    return sum;
+}
+
+
+//4. Implementar un programa que rellene un array con los números primos comprendidos entre 1 y 100 y los muestre en pantalla en orden descendente.
+
+
+//5. Implemente un programa que gestione los datos de stock de una tienda de abarrotes, la información a recoger será: nombre del producto, precio, cantidad en stock. La tienda dispone de 10 productos distintos. El programa debe ser capaz de:
+//   a. Dar de alta un producto nuevo.
+//   b. Buscar un producto por su nombre.
+//   c. Modificar el stock y precio de un producto dado.
+
+
+//6. Escribe un programa que pida nueve números enteros y los almacene en una matriz 3x3. Calcula la suma de los números de cada fila y mostrar por pantalla el número de fila con mayor suma.
+
+
+//7. Escribe un programa, que trabajando mediante funciones, presente un menú al usuario, mueva las columnas a la derecha o izquierda, asimismo mueva las filas para arriba o para abajo.
