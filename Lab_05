@@ -1,0 +1,200 @@
+//1. Asignar valores a dos variables enteras, intercambie estos valores almacenados usando solo punteros a enteros.
+
+#include <stdio.h>
+
+using namespace std;
+
+int main(){
+    int aux, val1, val2;
+
+    printf("\n   Introduzca el valor 1: ");
+    scanf("%d", &val1 );
+    
+    printf("\n   Introduzca el valor 2: ");
+    scanf("%d", &val2);
+
+    printf("\n   A continuación se intercabiarán los valores:");
+
+    aux=val1;
+    val1=val2;
+    val2=aux;
+
+    printf("\n\n   Ahora, el valor 1 es: %d",val1);
+    printf("\n\n   Ahora, el valor 2 es: %d",val2);
+
+    return 0;
+}
+
+
+//2. Cree dos vectores con valores flotantes y asígnele valores aleatorios, para esto deberá de asignar memoria a cada vector. Calcule el producto punto de vectores y muestre por pantalla. Una vez finalizado este proceso, retire la memoria asignada a los punteros. Repita este proceso de asignación y retiro de memoria dentro de un for de 1 000 000 veces.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+void readVect(float *vect, int n);
+float prdtEsc(float *val1, float *val2, int n);
+void impVect(float *v, int n);
+
+int main(int argc, char **argv){
+    float *vect1;
+    float *vect2;
+    int dim;
+    int opt;
+    float prdt;
+    do{
+        do{
+            printf("\nIndique la cantidad de elementos de su vector: ");
+            scanf("%d",&dim);
+            if(dim<=0){
+                printf("\nNo se puedo realizar la acción.");
+            }
+        }
+        while(dim<=0);
+        vect1=(float*)calloc(dim,sizeof(float));
+        vect2=(float*)calloc(dim,sizeof(float));
+        if(vect1==NULL||vect2==NULL){
+            printf("\nNo se asigno memoria\n");
+            if(vect1!=NULL){
+                free(vect1);
+            }
+            if(vect2!=NULL){
+                free(vect2);
+            }
+        }
+        else{
+            readVect(vect1,dim);
+            readVect(vect2,dim);
+            prdt=prdtEsc(vect1,vect2,dim);
+            printf("\nEl vector 1 es: ");
+            impVect(vect1,dim);
+            printf("\nEl vector 2 es: ");
+            impVect(vect2,dim);
+            printf("\nEl producto es: %.2f",prdt);
+            free(vect1);
+            free(vect2);
+        }
+        printf("\nPara repetir el proceso pulse 1.\n");
+        scanf("%d",&opt);
+    }
+    while(opt==1);
+    return 0;
+}
+
+void readVect(float *vect, int n){
+    int i;
+    for(i=0; i<n; i++){
+        printf("\nIndique el valor %d: ",i);
+        scanf("%f",&vect[i]);
+    }
+    return;
+}
+
+float prdtEsc(float *val1, float *val2, int n){
+    int i;
+    float sum;
+    sum=0;
+    for(i=0; i<n; i++){
+        sum=sum+(val1[i]*val2[i]);
+    }
+    return sum;
+}
+
+void impVect(float *v, int n){
+    int i;
+    for(i=0; i<n; i++){
+        printf(" %.2f: ",v[i]);
+    }
+    return;
+}
+
+
+//3. Construya una lista enlazada simple utilizando solo punteros. Añada las funciones de insertar y eliminar un elemento. En la función insertar se debe asegurar que los números insertados estén en orden creciente. Simule el proceso con 10000 números aleatorios sin que el programa falle.
+
+
+//4. Construya una lista enlazada que almacene tanto números como cadenas de texto utilizando punteros void. Incluya una función de búsqueda de muestre un dato almacenado además del tipo de dato que se encuentra almacenado (int, float, char, ...)
+
+
+//5. Implemente su propia función de concatenación de cadenas de texto especial (¡no es la función ordinaria de concatenación!), recibirá como parámetro dos punteros de caracteres y tendrá que asignar el contenido del segundo puntero al INICIO del primer puntero. La función no retorna ningún valor.
+
+
+//6. Utilizando punteros a funciones, implemente las funciones:
+//     a. void sumar (int a, int b);
+//     b. void restar (int a, int b);
+//     c. void multiplicar (int a, int b);
+//     d. void dividir (int a, int b);
+//   Cree un vector de punteros a funciones e implemente un programa que permita la invocación de cada función, pero a través del puntero.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int x,y,opt;
+
+void sum(void){
+    int rst;
+    rst=x+y;
+    printf("\n\nEl resultado de %d + %d es %d",x,y,rst);
+    printf("\n\n----------------------------------");
+}
+
+void sub(void){
+    int rst;
+    rst=x-y;
+    printf("\n\nEl resultado de %d - %d es %d",x,y,rst);
+    printf("\n\n----------------------------------");
+}
+
+void mul(void){
+    int rst;
+    rst=x*y;
+    printf("\n\nEl resultado de %d * %d es %d",x,y,rst);
+    printf("\n\n----------------------------------");
+}
+
+void div(void){
+    int rst;
+    rst=x/y;
+    printf("\n\nEl resultado de %d / %d es %d",x,y,rst);
+    printf("\n\n----------------------------------");
+}
+
+int main(void){
+    printf("\n\nIngrese el primer dígito: ");
+    scanf("%d",&x);
+    printf("\n\nIngrese el segundo dígito: ");
+    scanf("%d",&y);
+    
+    do{
+        printf("\nOperaciones: ");
+        printf("\n1. Sumar");
+        printf("\n2. Restar");
+        printf("\n3. Multiplicar");
+        printf("\n4. Dividir");
+        printf("\n5. Salir");
+        printf("\nElija la operación a realizar: ");
+        scanf("%d",& opt);
+         
+        switch(opt){
+            case 1:{
+                sum();
+                break;}
+            case 2:{
+                sub();
+                break;} 
+            case 3:{
+                mul();
+                break;} 
+            case 4:{
+                div();
+                break;}
+            case 5:{
+                exit(0);
+                break;}
+                
+            default: printf("\n ERROR OPCION NO VALIDA");
+        }
+    }
+    
+    while(opt!=5);
+}
