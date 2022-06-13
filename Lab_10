@@ -1,0 +1,537 @@
+//1. Defina una lista enlazada que permita insertar elementos al final de todos los elementos que ya se hayan ingresado. Por el momento no es necesario preservar un orden, simplemente los elementos nuevos deben de ingresar como el último elemento.
+
+//main.cpp
+#include<iostream>
+#include "lista.h"
+using namespace std;
+
+int main (int argc, char *argv[]){
+	lista lista;
+	lista.isrtNodo(15);
+	lista.isrtNodo(7);
+	lista.isrtNodo(6);
+	lista.isrtNodo(298);
+	lista.isrtNodo(67);
+	lista.imprLista();
+	return 0;
+}
+
+//lista.cpp
+#include "lista.h"
+
+lista::lista(){
+	head=NULL;
+}
+
+lista::~lista(){
+}
+
+void lista::isrtNodo(int datos){
+	nodo* newNodo= new nodo(datos);
+	if (head==NULL){
+		head=newNodo;
+		return;
+	}
+	nodo* aux=head;
+	while (aux->sigNodo!=NULL){
+		aux=aux->sigNodo;
+	}
+	aux->sigNodo=newNodo;
+}
+
+void lista::imprLista(){
+	nodo* aux=head;
+	if (head==NULL){
+		cout<<"Su lista no contiene elementos."<<endl;
+		return; 
+	}
+	cout<<"Los elementos de su lista son: ";
+	while (aux!=NULL){
+		if ((aux->sigNodo)!=NULL){
+			cout<<aux->datos<<", ";
+		}
+		else{
+			cout<<aux->datos;
+		}
+		aux=aux->sigNodo;
+	}
+	cout<<endl;
+}
+
+//lista.h
+#ifndef LISTA_H
+#define LISTA_H
+#include "nodo.h"
+
+class lista{
+	nodo* head;
+public:
+	lista();
+	~lista();
+	void isrtNodo(int datos);
+	void imprLista();
+};
+
+#endif
+
+//nodo.cpp
+#include "nodo.h"
+
+nodo::nodo(){
+	datos=0;
+	sigNodo=NULL;
+}
+
+nodo::~nodo(){
+	
+}
+
+nodo::nodo(int insertDat){
+	this->datos=insertDat;
+	this->sigNodo=NULL;
+}
+
+//nodo.h
+#ifndef NODO_H
+#define NODO_H
+#include <iostream>
+using namespace std;
+
+class nodo{
+public:
+	int datos;
+	nodo* sigNodo;
+	nodo();
+	~nodo();
+	nodo(int insertDat);
+};
+
+#endif
+
+
+//2. Con la implementación de la lista enlazada anterior, desarrolle una función que permita ingresar los elementos al inicio de todos los demás elementos. Tendrá que modificar el comportamiento del puntero que tiene referencia al primer elemento para que sea redireccionado al nuevo elemento por ingresar.
+
+#include <iostream>
+using namespace std;
+
+class nodo{
+public:
+	int dato;
+	nodo* sig;
+	nodo(){
+	}
+	nodo* add1(nodo*,int);
+	void show(nodo*);
+};
+
+nodo* nodo::add1(nodo* str, int n){
+	
+	nodo* newu=new nodo;
+	newu->dato=n;
+	newu->sig=str;
+	return newu;
+}
+
+void nodo::show(nodo*str){
+	cout<<" "<<endl;
+	for(nodo *p=str;p!=NULL;p=p->sig){
+		cout<<p->dato<<"->";
+	}
+}
+
+int main(){
+	int siz;
+	int num;
+	nodo* str=NULL;
+	cout<<"Indique el tamaño de su lista: "<<endl;
+	cin>>siz;
+	for(int i=0; i<siz; i++){
+		cout<<"Ingrese un número: "<<endl;
+		cin>>num;
+		str=str->add1(str,num);
+	}
+	
+	str->show(str);
+	return 0;
+}
+
+
+//3. Desarrolle una función que permita ingresar elementos en el medio de dos elementos de la lista enlazada, como se muestra en la siguiente imagen. Solicite que se ingrese una posición válida dentro de la lista y permita que el valor ingresado se pueda anexar en esa posición.
+
+//main.cpp
+#include<iostream>
+#include "lista.h"
+using namespace std;
+
+int main (int argc, char *argv[]){
+	int dato, pst, opt;
+	bool validPst, endit;
+	
+	endit=false;
+	lista L;
+	L.isrtNodo(5);
+	L.isrtNodo(583);
+	L.isrtNodo(67);
+	L.isrtNodo(3);
+	L.isrtNodo(59);
+	L.imprListsiz();
+	L.imprList();
+	
+	while(true){
+		cout<<endl<<"Indique el número que desee ingresar en la lista: ";
+		cin>>dato;
+		while(true){
+			cout<<"Indique la posición en la lista luego de la cual ingresar su número: ";
+			cin>>pst;
+			validPst=L.istrMiddle(dato,pst);
+			if (validPst==1){
+				break;
+			}
+		}
+		L.imprListsiz();
+		L.imprList();
+		while(true){
+			cout<<endl<<"¿Desea agregar otro elemento? "<<endl<<"1. Sí"<<endl<<"2. No"<<endl<<"Elija la opción según los números indicados: ";
+			cin>>opt;
+			if(opt==1){
+				break;
+			}
+			else if(opt==2){
+				endit=true;
+				break;
+			}
+			else{
+				cout<<"No válido."<<endl;
+			}
+		}
+		if(endit==true){
+			break;
+		}
+	}
+	
+	return 0;
+}
+
+//lista.cpp
+#include "lista.h"
+
+lista::lista(){
+	head=NULL;
+}
+
+lista::~lista(){
+}
+
+void lista::listSiz(){
+	listLen=0;
+	if (head==NULL){
+		return;
+	}
+	nodo* auxx=head;
+	while (auxx!=NULL){
+		auxx=auxx->sigNodo;
+		listLen++;
+	}
+}
+
+void lista::imprListsiz(){
+	this->listSiz();
+	cout<<endl<<"Su lista contiene "<<listLen<<" elemento/s."<<endl;
+}
+
+void lista::isrtNodo(int datos){
+	nodo* newNodo=new nodo(datos);
+	if(head==NULL){
+		head=newNodo;
+		return;
+	}
+	nodo* aux=head;
+	while (aux->sigNodo!=NULL){
+		aux=aux->sigNodo;
+	}
+	aux->sigNodo=newNodo;
+}
+
+bool lista::istrMiddle(int datos,int pst){
+	nodo* newNodo=new nodo(datos);
+	this->listSiz();
+	if (listLen>1 && pst<listLen && pst>0){
+		nodo* aux1=head;
+		nodo* aux2=NULL;
+		while(pst-->=1){
+			aux2=aux1;
+				aux1=aux1->sigNodo;
+		}
+		aux2->sigNodo=newNodo;
+		newNodo->sigNodo=aux1;
+		return true;
+	}
+	else{
+		cout<<"No válido."<<endl;
+		return false;
+	}
+}
+
+void lista::imprList(){
+	nodo* aux=head;
+	if(head==NULL){
+		cout<<"Vacío."<<endl;
+		return; 
+	}
+	cout<<"Su lista es la siguiente: ";
+	while (aux!=NULL){
+		if ((aux->sigNodo)!=NULL){
+			cout<<aux->datos<<", ";
+		}
+		else{
+			cout<<aux->datos;
+		}
+		aux=aux->sigNodo;
+	}
+	cout<<endl;
+}
+
+//lista.h
+#ifndef LISTA_H
+#define LISTA_H
+#include "nodo.h"
+
+class lista{
+	nodo* head;
+	int listLen;
+public:
+	lista();
+	~lista();
+	void isrtNodo(int datos);
+	void listSiz();
+	void imprListsiz();
+	bool istrMiddle(int datos, int pst);
+	void imprList();
+};
+
+#endif
+
+//nodo.cpp
+#include "nodo.h"
+
+nodo::nodo(){
+	datos=0;
+	sigNodo=NULL;
+}
+
+nodo::~nodo(){
+	
+}
+
+nodo::nodo(int insertDat){
+	this->datos=insertDat;
+	this->sigNodo=NULL;
+}
+
+//nodo.h
+#ifndef NODO_H
+#define NODO_H
+#include <iostream>
+using namespace std;
+
+class nodo{
+public:
+	int datos;
+	nodo* sigNodo;
+	nodo();
+	~nodo();
+	nodo(int insertDat);
+};
+
+#endif
+
+
+//4. Elabore una función que permita eliminar el último elemento de una lista enlazada. (Evite copiar los elementos en una nueva lista para completar la eliminación del elemento).
+
+
+//5. Desarrolle una función que permita eliminar el primer elemento de una lista sin perder referencia de los demás elementos que ya se encuentran almacenados en la estructura. (Evite copiar los elementos en una nueva lista para completar la eliminación de los elementos).
+
+//main.cpp
+#include<iostream>
+#include "lista.h"
+using namespace std;
+
+int main (int argc, char *argv[]){
+	lista list;
+	list.isrtNodo(9);
+	list.isrtNodo(68);
+	list.isrtNodo(20);
+	list.isrtNodo(976);
+	list.isrtNodo(70);
+	list.isrtNodo(18);
+	list.imprListsiz();
+	list.imprList();
+	cout<<endl<<"Se eliminará el primer número de la lista actual."<<endl;
+	list.deleteElmt();
+	list.imprListsiz();
+	list.imprList();
+	cout<<endl<<"Se agregará un nuevo número."<<endl;
+	list.isrtNodo(326);
+	list.imprListsiz();
+	list.imprList();
+	cout<<endl<<"Se eliminará el primer número de la lista. "<<endl;
+	list.deleteElmt();
+	list.imprListsiz();
+	list.imprList();
+	
+	return 0;
+}
+
+//lista.cpp
+#include "lista.h"
+
+lista::lista(){
+	head=NULL;
+}
+
+lista::~lista(){	
+}
+
+void lista::listSiz(){
+	listLen=0;
+	if(head==NULL){
+		return;
+	}
+	nodo* auxx=head;
+	while(auxx!=NULL){
+		auxx=auxx->sigNodo;
+		listLen++;
+	}
+}
+
+void lista::imprListsiz(){
+	this->listSiz();
+	cout<<endl<<"La lista contiene "<<listLen<<" elemento/s."<<endl;
+}
+void lista::isrtNodo(int datos){
+	nodo* newNodo= new nodo(datos);
+	if (head==NULL){
+		head=newNodo;
+		return;
+	}
+	nodo* aux=head;
+	while (aux->sigNodo!=NULL){
+		aux=aux->sigNodo;
+	}
+	aux->sigNodo=newNodo;
+}
+
+void lista::isrtMiddle(int datos,int pst){
+	nodo* newNodo= new nodo(datos);
+	this->listSiz();
+	if (listLen>1 && pst<listLen && pst>0){
+		nodo* aux1=head;
+		nodo* aux2=NULL;
+		while (pst-->=1){
+			aux2=aux1;
+				aux1=aux1->sigNodo;
+		}
+		aux2->sigNodo=newNodo;
+		newNodo->sigNodo=aux1;
+		return;
+	}
+	else{
+		cout<<endl<<"No válido."<<endl;
+		return;
+	}
+}
+
+void lista::deleteElmt(){
+	this->listSiz();
+	nodo *aux=head;
+	if (head==NULL){
+		cout<<endl<<"Lista vacía, no se pudo eliminar elementos."<<endl;
+		return; 
+	}
+	else if (head->sigNodo==NULL){
+		head=NULL;
+		delete head;
+		return; 
+	}
+	head=head->sigNodo;
+	delete aux;
+}
+
+void lista::imprList(){
+	nodo* aux=head;
+	if (head==NULL){
+		cout<<"Lista vacía."<<endl;
+		return; 
+	}
+	cout<<"Los elementos de su lista son los siguientes: ";
+	while (aux!=NULL){
+		if ((aux->sigNodo)!=NULL){
+			cout<<aux->datos<<", ";
+		}
+		else{
+			cout<<aux->datos;
+		}
+		aux=aux->sigNodo;
+	}
+	cout<<endl;
+}
+
+//lista.h
+#ifndef LISTA_H
+#define LISTA_H
+#include "nodo.h"
+
+class lista{
+	nodo* head;
+	int listLen;
+public:
+	lista();
+	~lista();
+	void isrtNodo(int datos);
+	void listSiz();
+	void isrtMiddle(int datos,int pst);
+	void deleteElmt();
+	void imprListsiz();
+	void imprList();
+};
+
+#endif
+
+//nodo.cpp
+#include "nodo.h"
+
+nodo::nodo(){
+	datos=0;
+	sigNodo=NULL;
+}
+
+nodo::~nodo(){	
+}
+
+nodo::nodo(int insertDat){
+	this->datos=insertDat;
+	this->sigNodo=NULL;
+}
+
+//nodo.h
+#ifndef NODO_H
+#define NODO_H
+#include <iostream>
+using namespace std;
+
+class nodo{
+public:
+	int datos;
+	nodo* sigNodo;
+	nodo();
+	~nodo();
+	nodo(int insertDat);
+};
+
+#endif
+
+
+//6. Dado una posición válida dentro de la lista, permita al usuario eliminar un elemento de cualquier posición sin perder referencia de los demás elementos.
+
+
+//7.Desarrolle un algoritmo de ordenamiento que permita ordenar los elementos de forma ascendente y descendente de acuerdo a la elección del usuario. Se debe poder simular el ingreso de 10 mil elementos de forma aleatoria y ordenarlos en el menor tiempo posible ( < 2 seg).
