@@ -1,10 +1,338 @@
 //1. Defina una Pila que permita insertar elementos utilizando clases.
 
+#include<iostream>
+#include<list>
+#include<cmath>
+using namespace std;
+
+class pila{
+private:
+	int n;
+	pila* next;
+public:
+	pila* create(int n_){
+		pila* L = new(class pila);
+		L->n=n_;
+		L->next=NULL;
+		return L;
+	}
+	void isrt(pila*& L, int n_){
+		if(L==NULL){
+			L=create(n_);
+		}
+		else{
+			isrt(L->next,n_);
+		}
+	}
+	void show(pila* L){
+		if(L!=NULL){
+			if(L->next==NULL){
+				cout<<L->n<<endl;
+			}
+			else{
+				cout<<L->n<<" -> ";
+				show(L->next);
+			}
+		}
+	}
+	void dest(pila* &L){
+		delete L;
+	}
+};
+
+int main(){
+	pila* tow=NULL;
+	int op;
+	cout<<"Indique la cantidad de discos: ";
+	cin>>op;
+	for(int i=op; i>0; i--){
+		if(i==op){
+			tow=tow->create(i);
+		}
+		else{
+			tow->isrt(tow,i);
+		}
+	}
+	cout<<"Lista: "<<endl;
+	tow->show(tow);
+	cout<<"Se eliminaron los elementos."<<endl;
+	tow->dest(tow);
+	
+	return 0;
+}
+
 
 //2. Sobre el ejercicio anterior, adecue el programa para eliminar elementos de una Pila.
 
+//main.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+int main(){
+	pila* tow=NULL;
+	int op1;
+	cout<<"Indique la cantidad de elementos: ";
+	cin>>op1;
+	for(int i=op1; i>0; i--){
+		if(i==op1){
+			tow=tow->create(i);
+		}
+		else{
+			tow->isrt(tow,i);
+		}
+	}
+	cout<<"Lista: "<<endl;
+	tow->show(tow);
+	string op2;
+	while(true){
+		cout<<"------------------------------------------------------------"<<endl;
+		cout<<"Menu:"<<endl;
+		cout<<"1. Ingresar elemento a la lista."<<endl;
+		cout<<"2. Eliminar el ultimo elemento de la lista."<<endl;
+		cout<<"3. Salir."<<endl;
+		cout<<"------------------------------------------------------------"<<endl;
+		cout<<"Elija una opcion segun los numeros indicados anteriormente: ";
+		cin>>op2;
+		if(op2=="1"){
+			int op3;
+			cout<<"Ingrese el elemento que desea agregar: ";
+			cin>>op3;
+			tow->isrt(tow,op3);
+			cout<<"Lista: "<<endl;
+			tow->show(tow);
+		}
+		else if(op2=="2"){
+			tow->del(tow);
+			cout<<"Lista: "<<endl;
+			tow->show(tow);
+		}
+		else if(op2=="3"){
+			cout<<"Se eliminó la lista."<<endl;
+			tow->dest(tow);
+			break;
+		}
+		else{
+			cout<<"No válido"<<endl;
+		}
+	}
+	return 0;
+}
+
+//source.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+pila* pila::create(int n_){
+	pila* L=new(class pila);
+	L->n=n_;
+	L->next=NULL;
+	return L;
+}
+
+void pila::isrt(pila*& L,int n_){
+	if(L==NULL){
+		L=create(n_);
+	}
+	else{
+		isrt(L->next,n_);
+	}
+}
+
+void pila::del(pila*& L){
+	if(L->next==NULL){
+		L=NULL;
+	}
+	else{
+		del(L->next);
+	}
+}
+
+void pila::show(pila* L){
+	if(L!=NULL){
+		if (L->next==NULL){
+			cout<<L->n<<endl;
+		}
+		else{
+			cout<<L->n<<" -> ";
+			show(L->next);
+		}
+	}
+}
+
+void pila::dest(pila*& L){
+	delete L;
+}
+
+//head.h
+#pragma once
+#include<iostream>
+using namespace std;
+
+class pila{
+private:
+	int n;
+	pila* next;
+public:
+	pila* create(int);
+	void isrt(pila*&,int);
+	void del(pila*&);
+	void show(pila*);
+	void dest(pila*&);
+};
+
 
 //3. Implemente un algoritmo para buscar elementos de la Pila.
+
+//main.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+int main(){
+	pila* tow=NULL;
+	int op1;
+	cout<<"Indique la cantidad de elementos: ";
+	cin>>op1;
+	for(int i=op1; i>0; i--){
+		if(i==op1){
+			tow=tow->create(i);
+		}
+		else{
+			tow->isrt(tow,i);
+		}
+	}
+	cout<<"Lista: "<<endl;
+	tow->show(tow);
+	string op2;
+	while(true){
+		cout<<"----------------------------------------------------------------"<<endl;
+		cout<<"Menu:"<<endl;
+		cout<<"1. Ingresar un elemento a la lista"<<endl;
+		cout<<"2. Eliminar ultimo elemento de la lista"<<endl;
+		cout<<"3. Buscar un elemento en la lista."<<endl;
+		cout<<"4. Salir."<<endl;
+		cout<<"----------------------------------------------------------------"<<endl;
+		cout<<"Elija una opcion segun los numeros indicados en el menu: ";
+		cin>>op2;
+		if(op2=="1"){
+			int op3;
+			cout<<"Ingrese el elemento que desee insertar: ";
+			cin>>op3;
+			tow->isrt(tow,op3);
+			cout<<"Lista: "<<endl;
+			tow->show(tow);
+		}
+		else if(op2=="2"){
+			tow->del(tow);
+			cout<<"Lista: "<<endl;
+			tow->show(tow);
+		}
+		else if(op2=="3"){
+			int op3;
+			cout<<"Indique el elemento que desea buscar: ";
+			cin>>op3;
+			int pos=1;
+			tow->search(tow,op3,pos);
+		}
+		else if(op2=="4"){
+			cout << "Se elimino la lista."<<endl;
+			tow->dest(tow);
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+		}
+	}
+	return 0;
+}
+
+//source.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+pila* pila::create(int n_){
+	pila* L=new(class pila);
+	L->n=n_;
+	L->next=NULL;
+	return L;
+}
+
+void pila::isrt(pila*& L,int n_){
+	if(L==NULL){
+		L=create(n_);
+	}
+	else{
+		isrt(L->next,n_);
+	}
+}
+
+void pila::del(pila*& L){
+	if(L->next==NULL){
+		L=NULL;
+	}
+	else{
+		del(L->next);
+	}
+}
+
+void pila::search(pila* L,int elm,int pos){
+	if(L==NULL){
+		cout<<"No se encontro el elemento que busca."<<endl;
+	}
+	else{
+		if(L->n==elm){
+			cout<<"El elemento que busca está en la posicion "<<pos<<endl;
+		}
+		else{
+			search(L->next,elm,pos+1);
+		}
+	}
+}
+
+void pila::show(pila* L){
+	if(L!=NULL){
+		if(L->next==NULL){
+			cout<<L->n<<endl;
+		}
+		else{
+			cout<<L->n<<" -> ";
+			show(L->next);
+		}
+	}
+}
+
+void pila::dest(pila*& L){
+	delete L;
+}
+
+//head.cpp
+#pragma once
+#include<iostream>
+using namespace std;
+
+class pila{
+private:
+	int n;
+	pila* next;
+public:
+	pila* create(int);
+	void isrt(pila*&,int);
+	void del(pila*&);
+	void search(pila*,int,int);
+	void show(pila*);
+	void dest(pila*&);
+};
 
 
 //4. Escribir un programa que dé la solución al problema de las Torres de Hanoi para N discos, utilizando pilas, las cuales representan cada uno de los postes.
