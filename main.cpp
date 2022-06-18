@@ -41,7 +41,7 @@ public:
 int main(){
 	pila* tow=NULL;
 	int op;
-	cout<<"Indique la cantidad de discos: ";
+	cout<<"Indique la cantidad de elementos: ";
 	cin>>op;
 	for(int i=op; i>0; i--){
 		if(i==op){
