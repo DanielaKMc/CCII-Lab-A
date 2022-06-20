@@ -1,0 +1,902 @@
+//1. Defina una Cola que permite insertar elementos utilizando clases.
+
+#include<iostream>
+#include<list>
+#include<cmath>
+using namespace std;
+
+class nodo{
+private:
+	int n;
+	nodo* next;
+public:
+	nodo* create(int n){
+		nodo* newu=new nodo();
+		newu->n=n;
+		newu->next=NULL;
+		return newu;
+	}
+	void isrt(nodo* &L,int n){
+		nodo* newu=create(n);
+		if(L==NULL){
+			L=newu;
+		}
+		else{
+			nodo* aux=L;
+			while(aux->next!=NULL){
+				aux=aux->next;
+			}
+			aux->next=newu;
+		}
+	}
+	int getNum(nodo* L){
+		return L->n;
+	}
+	nodo* getNext(nodo* L){
+		return L->next;
+	}
+	void show(nodo* L){
+		nodo* aux=L;
+		while(aux!=NULL){
+			cout<<aux->n<<" ";
+			aux=aux->next;
+		}
+		cout<<endl;
+	}
+	void dest(nodo*& L){
+		delete L;
+	}
+};
+
+class cola{
+private:
+	nodo* first;
+	nodo* last;
+public:
+	cola* create(){
+		cola* newu=new cola();
+		newu->first=NULL;
+		newu->last=NULL;
+		return newu;
+	}
+	void isrtC(cola* &L,int n){
+		if(L->first==NULL){
+			nodo* newu=NULL;
+			newu->isrt(newu,n);
+			L->first=newu;
+			L->last=newu;
+		}
+		else{
+			nodo* newu2=L->first;
+			newu2->isrt(newu2,n);
+			nodo* newu=L->first;
+			nodo* aux=newu;
+			while(true){
+				if(aux->getNext(aux)==NULL){
+					L->last=aux;
+					break;
+				}
+				else{
+					aux=aux->getNext(aux);
+				}
+			}
+		}
+	}
+	void show(cola* L){
+		if(L->first!=NULL){
+			nodo* aux=L->first;
+			nodo* base=L->last;
+			cout<<"Su lista es: ";
+			aux->show(aux);
+			cout<<"El primer valor es: "<<aux->getNum(aux)<<endl;
+			cout<<"El ultimo valor es: "<<base->getNum(base)<<endl;
+			cout<<"------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+		}
+		else{
+			cout<<"La lista esta vacia."<<endl;
+			cout<<"------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+		}
+	}
+	void dest(cola* &L){
+		delete L;
+	}
+};
+
+int main(){
+	cola* L=NULL;
+	L=L->create();
+	string op;
+	while(true){
+		cout<<"------------------------------------------"<<endl;
+		cout<<"Menu"<<endl;
+		cout<<"1. Ingresar un valor."<<endl;
+		cout<<"2. Mostrar la lista."<<endl;
+		cout<<"3. Salir."<<endl;
+		cout<<"\n\t"<<endl;
+		cout<<"Elija una opcion: ";
+		cin>>op;
+		if(op=="1"){
+			int n;
+			cout<<"Indique el numero que desea ingresar: ";
+			cin>>n;
+			cout<<"------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+			L->isrtC(L,n);
+		}
+		else if(op=="2"){
+			L->show(L);
+		}
+		else if(op=="3"){
+			L->dest(L);
+			cout<<"------------------------------------------"<<endl;
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+			cout<<"------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+		}
+	}	
+	return 0;
+}
+
+
+//2. Sobre el ejercicio anterior, adecue el programa para eliminar elementos de una Cola.
+
+//main.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+int main(){
+	cola* L=NULL;
+	L=L->create();
+	string opt1;
+	while(true){
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"Menu:"<<endl;
+		cout<<"1. Ingresar un valor."<<endl;
+		cout<<"2. Eliminar el primer Valor."<<endl;
+		cout<<"3. Mostrar la lista."<<endl;
+		cout<<"4. Salir."<<endl;
+		cout<<"\n\t"<<endl;
+		cout<<"Elija una opcion: ";
+		cin>>opt1;
+		if(opt1=="1"){
+			int n;
+			cout<<"Indique el numero que desea ingresar: ";
+			cin>>n;
+			cout<<"---------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+			L->isrtC(L,n);
+		}
+		else if(opt1=="2"){
+			L->del(L);
+		}
+		else if(opt1=="3"){
+			L->show(L);
+		}
+		else if(opt1=="4"){
+			L->dest(L);
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+			cout<<"---------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+		}
+	}
+	return 0;
+}
+
+//source.cpp
+#include<iostream>
+#include "head.h"
+using namespace std;
+
+nodo* nodo::create(int n){
+	nodo* newu=new nodo();
+	newu->n=n;
+	newu->next=NULL;
+	return newu;
+}
+
+void nodo::isrt(nodo*& L,int n){
+	nodo* newu=create(n);
+	if(L==NULL){
+		L=newu;
+	}
+	else{
+		nodo* aux=L;
+		while(aux->next!=NULL){
+			aux=aux->next;
+		}
+		aux->next=newu;
+	}
+}
+
+int nodo::getNum(nodo* L){
+	return L->n;
+}
+
+nodo* nodo::getNext(nodo* L){
+	return L->next;
+}
+
+void nodo::show(nodo* L){
+	nodo* aux=L;
+	while(aux!=NULL){
+		cout<<aux->n<<" ";
+		aux=aux->next;
+	}
+	cout<<endl;
+}
+
+void nodo::dest(nodo*& L){
+	delete L;
+}
+
+cola* cola::create(){
+	cola* newu=new cola();
+	newu->first=NULL;
+	newu->last=NULL;
+	return newu;
+}
+
+void cola::isrtC(cola*& L,int n){
+	if(L->first==NULL){
+		nodo* newu=NULL;
+		newu->isrt(newu,n);
+		L->first=newu;
+		L->last=newu;
+	}
+	else{
+		nodo* newu2=L->first;
+		newu2->isrt(newu2,n);
+		nodo* newu=L->first;
+		nodo* aux=newu;
+		while(true){
+			if(aux->getNext(aux)==NULL){
+				L->last=aux;
+				break;
+			}
+			else{
+				aux=aux->getNext(aux);
+			}
+		}
+	}
+}
+
+void cola::del(cola*& L){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		L->first=L->first->getNext(L->first);
+		delete aux;
+	}
+}
+
+void cola::show(cola* L){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		nodo* base=L->last;
+		cout<<"Su lista es: ";
+		aux->show(aux);
+		cout<<"El primer valor es: "<<aux->getNum(aux)<<endl;
+		cout<<"El ultimo valor es: "<<base->getNum(base)<<endl;
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"\n\t"<<endl;
+	}
+	else{
+		cout<<"Lista vacia."<<endl;
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"\n\t"<<endl;
+	}
+}
+
+void cola::dest(cola*& L){
+	delete L;
+}
+
+//head.h
+#pragma once
+#include<iostream>
+using namespace std;
+
+class nodo{
+private:
+	int n;
+	nodo* next;
+public:
+	nodo* create(int);
+	void isrt(nodo*&,int);
+	int getNum(nodo*);
+	nodo* getNext(nodo*);
+	void show(nodo*);
+	void dest(nodo*&);
+};
+
+class cola{
+private:
+	nodo* first;
+	nodo* last;
+public:
+	cola* create();
+	void isrtC(cola*&,int);
+	void del(cola*&);
+	void show(cola*);
+	void dest(cola*&);
+};
+
+
+//3. Implemente un algoritmo para buscar elementos de la Cola.
+
+//main.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+int main(){
+	cola* L=NULL;
+	L=L->create();
+	string opt1;
+	while(true){
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"Menu:"<<endl;
+		cout<<"1. Ingresar un valor."<<endl;
+		cout<<"2. Eliminar el primer valor."<<endl;
+		cout<<"3. Buscar un numero."<<endl;
+		cout<<"4. Mostrar lista."<<endl;
+		cout<<"5. Salir."<<endl;
+		cout<<"\n\t"<<endl;
+		cout<<"Elija una opcion: ";
+		cin>>opt1;
+		if(opt1=="1"){
+			int n;
+			cout<<"Indique el numero que desea ingresar: ";
+			cin>>n;
+			cout<<"---------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+			L->isrtC(L,n);
+		}
+		else if(opt1=="2"){
+			L->del(L);
+		}
+		else if(opt1=="3"){
+			int n;
+			cout<<"Indique el numero que desea buscar: ";
+			cin>>n;
+			L->search(L,n);
+		}
+		else if(opt1=="4"){
+			L->show(L);
+		}
+		else if(opt1=="5"){
+			L->dest(L);
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+			cout<<"---------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+		}
+	}
+	return 0;
+}
+
+//source.cpp
+#include<iostream>
+#include "head.h"
+using namespace std;
+
+nodo* nodo::create(int n){
+	nodo* newu=new nodo();
+	newu->n=n;
+	newu->next=NULL;
+	return newu;
+}
+
+void nodo::isrt(nodo*& L,int n){
+	nodo* newu=create(n);
+	if(L==NULL){
+		L=newu;
+	}
+	else{
+		nodo* aux=L;
+		while(aux->next!=NULL){
+			aux=aux->next;
+		}
+		aux->next=newu;
+	}
+}
+
+int nodo::getNum(nodo* L){
+	return L->n;
+}
+
+void nodo::search(nodo* L,int n){
+	nodo* aux=L;
+	int pos=1;
+	while(aux!=NULL){
+		if(aux->n==n){
+			cout<<"El numero "<<n<<" esta en la posicion "<<pos<<endl;
+			cout<<"---------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+			return;
+		}
+		pos++;
+		aux=aux->next;
+	}
+	cout<<"El numero "<<n<<" no esta en la lista."<<endl;
+	cout<<"---------------------------------------------"<<endl;
+	cout<<"\n\t"<<endl;
+}
+
+nodo* nodo::getNext(nodo* L){
+	return L->next;
+}
+
+void nodo::show(nodo* L){
+	nodo* aux=L;
+	while(aux!=NULL){
+		cout<<aux->n<<" ";
+		aux=aux->next;
+	}
+	cout<<endl;
+}
+
+void nodo::dest(nodo*& L){
+	delete L;
+}
+
+cola* cola::create(){
+	cola* newu=new cola();
+	newu->first=NULL;
+	newu->last=NULL;
+	return newu;
+}
+
+void cola::isrtC(cola*& L,int n){
+	if(L->first==NULL){
+		nodo* newu=NULL;
+		newu->isrt(newu,n);
+		L->first=newu;
+		L->last=newu;
+	}
+	else{
+		nodo* newu2=L->first;
+		newu2->isrt(newu2,n);
+		nodo* newu=L->first;
+		nodo* aux=newu;
+		while(true){
+			if(aux->getNext(aux)==NULL){
+				L->last=aux;
+				break;
+			}
+			else{
+				aux=aux->getNext(aux);
+			}
+		}
+	}
+}
+
+void cola::del(cola*& L){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		L->first=L->first->getNext(L->first);
+		delete aux;
+	}
+}
+
+void cola::show(cola* L){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		nodo* base=L->last;
+		cout<<"Su lista es: ";
+		aux->show(aux);
+		cout<<"El primer valor es: "<<aux->getNum(aux)<<endl;
+		cout<<"El ultimo valor es: "<<base->getNum(base)<<endl;
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"\n\t"<<endl;
+	}
+	else{
+		cout<<"Lista vacia."<<endl;
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"\n\t"<<endl;
+	}
+}
+
+void cola::search(cola* L,int n){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		aux->search(aux,n);
+	}
+	else{
+		cout<<"Lista vacia."<<endl;
+	}
+}
+
+void cola::dest(cola*& L){
+	delete L;
+}
+
+//head.h
+#pragma once
+#include<iostream>
+using namespace std;
+
+class nodo{
+private:
+	int n;
+	nodo* next;
+public:
+	nodo* create(int);
+	void isrt(nodo*&,int);
+	int getNum(nodo*);
+	void search(nodo*, const int);
+	nodo* getNext(nodo*);
+	void show(nodo*);
+	void dest(nodo*&);
+};
+
+class cola{
+private:
+	nodo* first;
+	nodo* last;
+public:
+	cola* create();
+	void isrtC(cola*&,int);
+	void del(cola*&);
+	void search(cola*, const int);
+	void show(cola*);
+	void dest(cola*&);
+};
+
+
+//4. Escribir un programa que permita comparar las edades de diferentes elementos. Debe utilizar el formato de colas en clases. Se debe definir inicialmente el número de elementos y valores de cada cola (pudiendo ser de diferentes tamaños ej. 2-3). Se evaluará el resultado de la comparación de los primeros elementos de las colas, realizada en un número de iteraciones 'n', en cada iteración se debe realizar el procedimiento de inserción y eliminación de elementos (rotando los elementos definidos inicialmente).
+
+//main.cpp
+#include<iostream>
+#include<list>
+#include<cmath>
+#include "head.h"
+using namespace std;
+
+int verM(){
+	int nM;
+	while(true){
+		cout<<"-------------------------------------------------------------------"<<endl;
+		cout<<"Indique la cantidad de hombres: ";
+		cin>>nM;
+		if(nM>0){
+			break;
+		}
+		else{
+			cout<<"No valido." <<endl;
+		}
+	}
+	return nM;
+}
+	
+int verW(){
+	int nW;
+	while(true){
+		cout<<"Indique la cantidad de mujeres: ";
+		cin>>nW;
+		if(nW>0){
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+		}
+	}
+	return nW;
+}
+	
+void it(cola* men, cola* women) {
+	cout<<"\n\t"<<endl;
+	int n;
+	while(true){
+		cout<<"Indique cuantas veces desea iterar: ";
+		cin>>n;
+		if(n>0){
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+		}
+	}
+	cola* auxM=men;
+	cola* auxW=women;
+	for(int i=1; i<=n; i++){
+		if(i==n){
+			if(auxM->getNum(auxM)>auxW->getNum(auxW)){
+				cout<<"El hombre de "<<auxM->getNum(auxM)<<" años es mayor a la mujer de "<<auxW->getNum(auxW)<<" años."<<endl;
+			}
+			else{
+				cout<<"La mujer de " <<auxW->getNum(auxW)<<" años es mayor al hombre de "<<auxM->getNum(auxM)<<" años."<<endl;
+			}
+		}
+		else{
+			int nM=auxM->getNum(auxM);
+			int nW=auxW->getNum(auxW);
+			auxM->isrtC(auxM,nM);
+			auxW->isrtC(auxW,nW);
+			auxM->del(auxM);
+			auxW->del(auxW);
+		}
+	}
+}
+
+int main(){
+	setlocale(LC_ALL,"");
+	cola* men=NULL;
+	cola* Maux=NULL;
+	men=men->create();
+	Maux=Maux->create();
+	cola* women=NULL;
+	cola* Waux=NULL;
+	women=women->create();
+	Waux=Waux->create();
+	int nM=verM();
+	int nW=verW();
+	cout<<"\n\t"<<endl;
+	cout<<"HOMBRES:"<<endl;
+	for(int i=0; i<nM; i++){
+		int c=1;
+		while(c!=0){
+			int year;
+			cout<<"Ingrese la edad del hombre: ";
+			cin>>year;
+			if(year>0){
+				men->isrtC(men,year);
+				Maux->isrtC(Maux,year);
+				c=0;
+			}
+			else{
+				cout<<"No valido."<<endl;
+			}
+		}
+	}
+	cout<<"MUJERES:"<<endl;
+	for(int i=0; i<nW; i++){
+		int c=1;
+		while(c!=0){
+			int year;
+			cout<<"Ingrese la edad de la mujer: ";
+			cin>>year;
+			if(year>0){
+				women->isrtC(women,year);
+				Waux->isrtC(Waux,year);
+				c=0;
+			}
+			else{
+				cout<<"No valido."<<endl;
+			}
+		}
+	}
+	cout<<"\n\t"<<endl;
+	cout<<"HOMBRES: ";
+	men->show(men);
+	cout<<"MUJERES: ";
+	women->show(women);
+	while(true){
+		it(men,women);
+		cout<<"\n\t"<<endl;
+		cout<<"Si desea seguir iterando presione '1', caso contrario presione '2': ";
+		string opt;
+		cin>>opt;
+		cout<<"\n\t"<<endl;
+		if(opt=="1"){
+			men=men->other(Maux);
+			women=women->other(Waux);
+			continue;
+		}
+		else if(opt=="2"){
+			cout<<"-------------------------------------------------------------------"<<endl;			
+			break;
+		}
+		else{
+			cout<<"No valido."<<endl;
+		}
+	}
+	men->dest(men);
+	women->dest(women);
+	return 0;
+}
+
+//source.cpp
+#include<iostream>
+#include "head.h"
+using namespace std;
+
+nodo* nodo::create(int n){
+	nodo* newu=new nodo();
+	newu->n=n;
+	newu->next=NULL;
+	return newu;
+}
+
+void nodo::isrt(nodo*& L,int n){
+	nodo* newu=create(n);
+	if(L==NULL){
+		L=newu;
+	}
+	else{
+		nodo* aux=L;
+		while(aux->next!=NULL){
+			aux=aux->next;
+		}
+		aux->next=newu;
+	}
+}
+
+int nodo::getNum(nodo* L){
+	return L->n;
+}
+
+void nodo::search(nodo* L,int n){
+	nodo* aux=L;
+	int pos=1;
+	while(aux!=NULL){
+		if(aux->n==n){
+			cout<<"El numero "<<n<<" esta en la posicion "<<pos<<endl;
+			cout<<"---------------------------------------------"<<endl;
+			cout<<"\n\t"<<endl;
+			return;
+		}
+		pos++;
+		aux=aux->next;
+	}
+	cout<<"El numero "<<n<<" no esta en la lista."<<endl;
+	cout<<"---------------------------------------------"<<endl;
+	cout<<"\n\t"<<endl;
+}
+
+nodo* nodo::getNext(nodo* L){
+	return L->next;
+}
+
+void nodo::show(nodo* L){
+	nodo* aux=L;
+	while(aux!=NULL){
+		cout<<aux->n<<" ";
+		aux=aux->next;
+	}
+	cout<<endl;
+}
+
+void nodo::dest(nodo*& L){
+	delete L;
+}
+
+cola* cola::create(){
+	cola* newu=new cola();
+	newu->first=NULL;
+	newu->last=NULL;
+	return newu;
+}
+
+nodo* cola::getFirst(cola* L){
+	return L->first;
+}
+
+int cola::getNum(cola* L){
+	nodo* X=L->first;
+	return X->getNum(X);
+}
+
+nodo* cola::getNext(cola* L){
+	nodo* X=L->first->getNext(L->first);
+	return X;
+}
+
+void cola::isrtC(cola*& L,int n){
+	if(L->first==NULL){
+		nodo* newu=NULL;
+		newu->isrt(newu,n);
+		L->first=newu;
+		L->last=newu;
+	}
+	else{
+		nodo* newu2=L->first;
+		newu2->isrt(newu2,n);
+		nodo* newu=L->first;
+		nodo* aux=newu;
+		while(true){
+			if(aux->getNext(aux)==NULL){
+				L->last=aux;
+				break;
+			}
+			else{
+				aux=aux->getNext(aux);
+			}
+		}
+	}
+}
+
+void cola::del(cola*& L){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		L->first=L->first->getNext(L->first);
+		delete aux;
+	}
+}
+
+void cola::show(cola* L){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		aux->show(aux);
+	}
+	else{
+		cout<<"Lista vacia."<<endl;
+		cout<<"---------------------------------------------"<<endl;
+		cout<<"\n\t"<<endl;
+	}
+}
+
+void cola::search(cola* L,int n){
+	if(L->first!=NULL){
+		nodo* aux=L->first;
+		aux->search(aux,n);
+	}
+	else{
+		cout<<"Lista vacia."<<endl;
+	}
+}
+
+void cola::dest(cola*& L){
+	delete L;
+}
+
+cola* cola::other(cola* et){
+	cola* newu=NULL;
+	newu=newu->create();
+	nodo* aux=et->first;
+	while(aux!=NULL){
+		newu->isrtC(newu,aux->getNum(aux));
+		aux=aux->getNext(aux);
+	}
+	return newu;
+}
+
+//head.h
+#pragma once
+#include<iostream>
+using namespace std;
+
+class nodo{
+private:
+	int n;
+	nodo* next;
+public:
+	nodo* create(int);
+	void isrt(nodo*&,int);
+	int getNum(nodo*);
+	void search(nodo*, const int);
+	nodo* getNext(nodo*);
+	void show(nodo*);
+	void dest(nodo*&);
+};
+
+class cola{
+private:
+	nodo* first;
+	nodo* last;
+public:
+	cola* create();
+	nodo* getFirst(cola*);
+	int getNum(cola*);
+	nodo* getNext(cola*);
+	void isrtC(cola*&,int);
+	void del(cola*&);
+	void search(cola*, const int);
+	void show(cola*);
+	void dest(cola*&);
+	cola* other(cola*);
+};
