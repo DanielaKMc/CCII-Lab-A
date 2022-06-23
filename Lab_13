@@ -1,0 +1,194 @@
+//1. Implementar un programa que maneje un arreglo de estructuras para almacenar los nombres y las fechas de cumpleaños de sus n compañeros. Y debe mostrarse por pantalla quienes cumplen años en este mes.
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct date{
+	int day;
+	int mon;
+	int yea;
+};
+
+struct classmate{
+	string name;
+	date birthday;
+};
+
+int main(){
+	int n;
+	cout<<"Indique la cantidad de companieros: ";
+	cin>>n;
+	cout<<"\n\t"<<endl;
+	cout<<"IMPORTANTE: Ingrese los datos en numeros (menos el nombre)."<<endl;
+	cin.ignore();
+	classmate* obj=new classmate[n];
+	for(int i=0; i<n; i++){
+		cout<<"\n\t"<<endl;
+		cout<<"---------------------DATOS DEL COMPAÑERO---------------------"<<endl;
+		cout<<"Ingrese el nombre de su companiero: ";
+		getline(cin,obj[i].name);
+		cout<<"Ingrese su dia de nacimiento: ";
+		cin>>obj[i].birthday.day;
+		cout<<"ingrese su mes de nacimiento: ";
+		cin>>obj[i].birthday.mon;
+		cout<<"ingrese su anio de nacimento: ";
+		cin>>obj[i].birthday.yea;
+		cin.ignore();
+	}
+	for(int i=0; i<n; i++){
+		if(obj[i].birthday.mon==6){
+			cout<<"\n\t"<<endl;
+			cout<<"Este mes es el cumpleanios de "<<obj[i].name<<"."<<endl;
+		}
+	}
+	delete[] obj;
+}
+
+
+//2. Implementar un programa que maneje un arreglo de estructuras que calcule la nota final del Ciencia de la Computación. El programa debe permitir el ingreso de cualquier cantidad de alumnos y para cada alumno, se podrá ingresar nombre, grupo, nota de la primera fase, segunda fase, tercera fase y proyecto final. El porcentaje de cada ítem es 15%, 20%, 25% y 40% respectivamente.
+
+#include <iostream>
+using namespace std;
+
+struct student{
+	string name;
+	char section;
+	double phase1;
+	double phase2;
+	double phase3;
+	double project;
+};
+
+void finalGrade(double, double, double, double);
+
+int main(){
+	int n;
+	cout<<"Ingrese la cantidad de alumnos: ";
+	cin>>n;
+	cout<<"\n\t"<<endl;
+	cin.ignore();
+	student* obj=new student[n];
+	for(int i=0; i<n;i++){
+		cout<<"-------DATOS DEL ESTUDIANTE-------"<<endl;
+		cout<<"Nombre del alumno: ";
+		getline(cin, obj[i].name);
+		cout<<"Grupo (A/B): ";
+		cin>>obj[i].section;
+		cout<<"Nota de la fase 1: ";
+		cin>>obj[i].phase1;	
+		cout<<"Nota de la fase 2: ";
+		cin>>obj[i].phase2;	
+		cout<<"Nota de la fase 3: ";
+		cin>>obj[i].phase3;
+		cout<<"Nota del proyecto: ";
+		cin>>obj[i].project;
+		cout<<"\n\t"<<endl;
+		cin.ignore();
+	}
+	
+	for(int j=0;j<n;j++){
+		cout<<"El promedio de "<<obj[j].name<<" es: ";
+		finalGrade(obj[j].phase1, obj[j].phase2, obj[j].phase3, obj[j].project);
+	}
+	delete[] obj;
+}
+	
+void finalGrade(double x, double y, double z, double k){
+	double average=0;
+	average=(0.15*x)+(0.2*y)+(0.25*z)+(0.4*k);
+	cout<<average<<endl;;
+}
+
+
+//3. Implemente un programa que maneje un arreglo de estructuras que solicite el nombre, edad y talla de 10 jugadores, debe mostrar por pantalla los que son menores de 20 años y tienen una talla mayor a 1,70 mts de altura.
+
+#include <iostream>
+using namespace std;
+
+struct player{
+	string name;
+	int year;
+	double height;
+};
+
+void outst(int ,double, string);
+
+int main(){
+	player obj[10];
+	for(int i=0; i<10; i++){
+		cout<<"-------------DATOS DEL JUGADOR-------------"<<endl;
+		cout<<"Ingrese el nombre del jugador "<<i+1<<": ";
+		getline(cin, obj[i].name);
+		cout<<"Edad del jugador: ";
+		cin>>obj[i].year;
+		cout<<"Talla del jugador: ";
+		cin>>obj[i].height;
+		cout<<"\n\t"<<endl;
+		cin.ignore();
+	}
+	for(int i=0; i<10; i++){
+		outst(obj[i].year, obj[i].height, obj[i].name);
+	}
+}
+	
+void outst(int x, double y, string z){
+	if(x<20 && y>1.7){
+		cout<<z<<" tiene menos de 20 anios y mide mas de 1.70"<<endl;
+	}
+}
+
+
+//4. Implemente un programa que maneje un arreglo de estructuras que solicite nombre, sexo y sueldo de los empleados de una empresa y debe mostrar por pantalla el menor y mayor sueldo.
+
+#include <iostream>
+using namespace std;
+
+struct employee{
+	string name;
+	char gender;
+	double salary;
+};
+
+void orderSala(double[], int);
+
+int main(){
+	int n;
+	cout<<"Indique la cantidad de empleados: ";
+	cin>>n;
+	cout<<"\n\t"<<endl;
+	cin.ignore();
+	double arrSala[n];
+	employee* obj=new employee[n];
+	for(int i=0; i<n; i++){
+		cout<<"-----------DATOS DEL EMPLEADO-----------"<<endl;
+		cout<<"Nombre del empleado "<<i+1<<": ";
+		getline(cin,obj[i].name);
+		cout<<"Sexo del empleado (M/F): ";
+		cin>>obj[i].gender;
+		cout<<"Sueldo del empleado: ";
+		cin>>obj[i].salary;
+		cout<<"\n\t"<<endl;
+		cin.ignore();
+	}
+	for(int i=0; i<n; i++){
+		arrSala[i]=obj[i].salary;
+	}
+	orderSala(arrSala,n);
+	delete[] obj;
+}
+	
+void orderSala(double arr[], int n){
+	int t;
+	for(int i=0; i<n; i++){
+		for(int j=0; j<(n-i); j++){
+			if(arr[j]<arr[j+1]){
+				t=arr[j];
+				arr[j]=arr[j+1];
+				arr[j+1]=t;				
+			}
+		}
+	}
+	cout<<"El menor sueldo es: "<<arr[n-1]<<endl;
+	cout<<"El mayor sueldo es: "<<arr[0]<<endl;
+}
